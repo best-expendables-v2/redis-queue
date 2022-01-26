@@ -94,3 +94,35 @@ func (cm *consumerManager) StartConsuming(queueName string, replicas int, pollDu
 func (cm *consumerManager) StopConsuming(queueName string) {
 	cm.queues[queueName].StopConsuming()
 }
+
+type OnFlyConsumingInput struct {
+	BaseQueueName string
+	ReferenceID   string
+	Replicas      int
+	PollDuration  time.Duration
+}
+
+func (cm *consumerManager) StartOnFlyConsuming(input OnFlyConsumingInput) {
+	cm.mutex.Lock()
+	defer cm.mutex.Unlock()
+	consumer, exists := cm.consumers[input.BaseQueueName]
+	if !exists {
+		panic(fmt.Errorf("there is no consumer for queue `%s`", input.BaseQueueName))
+	}
+	queueName := fmt.Sprintf("%s-%s", input.BaseQueueName, input.ReferenceID)
+	cm.queues[queueName] = cm.conn.OpenQueue(queueName)
+	failedQueue := cm.conn.OpenQueue(fmt.Sprintf("%s_failed", queueName))
+	cm.queues[queueName].SetPushQueue(failedQueue)
+	prefetchLimit := input.Replicas + 1
+	cm.queues[queueName].StartConsuming(prefetchLimit, input.PollDuration)
+
+	consumerName := fmt.Sprintf("%s_consumer", queueName)
+	cm.queues[queueName].AddConsumer(fmt.Sprintf("%v_%d", consumerName, 1), consumer)
+}
+
+func (cm *consumerManager) observeOnFlyQueue(queueName string) {
+	q := cm.queues[queueName]
+	if q == nil {
+		return
+	}
+}
