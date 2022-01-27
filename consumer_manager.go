@@ -125,4 +125,14 @@ func (cm *consumerManager) observeOnFlyQueue(queueName string) {
 	if q == nil {
 		return
 	}
+	for {
+		time.Sleep(5 * time.Millisecond)
+		readyCount := q.ReadyCount()
+		unAckedCount := q.UnackedCount()
+		if readyCount+unAckedCount == 0 {
+			q.StopConsuming()
+			return
+		}
+	}
+
 }

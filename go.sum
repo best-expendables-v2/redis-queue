@@ -11,8 +11,8 @@ github.com/best-expendables-v2/logger v0.0.0-20210531153023-31ac18ea84d2 h1:11RL
 github.com/best-expendables-v2/logger v0.0.0-20210531153023-31ac18ea84d2/go.mod h1:NscWDDlfnjYtGbAbqJFRSgKkDZRVZADNcGSEHP1baeE=
 github.com/best-expendables-v2/newrelic-context v0.0.0-20210531153227-aaf24a1659cb h1:myAjiLk2Gm6i34q4kFT5bezMCjtoG8u3Wbt77LFWJhY=
 github.com/best-expendables-v2/newrelic-context v0.0.0-20210531153227-aaf24a1659cb/go.mod h1:lVtu4G6GzIrES+jNKY8uTlJspMW4OiJu+GDBE4PUeC8=
-github.com/best-expendables-v2/rmq v0.0.0-20210531155641-31689b2232d9 h1:Gf/+VKOIrZYm0qEd0PTraeNurrrJ2aRyHhAOC8EZiT0=
-github.com/best-expendables-v2/rmq v0.0.0-20210531155641-31689b2232d9/go.mod h1:FJAEr5ZpH9Hiq9qJG8muWpdXSewXFPuzdKeTH3kDVLM=
+github.com/best-expendables-v2/rmq v1.0.0 h1:1pVQrriZX1/vnX+BqxBNnO478lWEZ++mrL3tVTEEvUk=
+github.com/best-expendables-v2/rmq v1.0.0/go.mod h1:FJAEr5ZpH9Hiq9qJG8muWpdXSewXFPuzdKeTH3kDVLM=
 github.com/best-expendables-v2/trace v0.0.0-20210531152255-f77654b9cda3 h1:rHi0C+2d4vosGXQU4WFvMmV7gjCoVpM4JUDbDDybvFY=
 github.com/best-expendables-v2/trace v0.0.0-20210531152255-f77654b9cda3/go.mod h1:lD6Kpfm+CyQRBVu9M6Te7iWLciVf5+mnsJHSM2c8QKk=
 github.com/best-expendables-v2/user-service-client v0.0.0-20210531152935-8a9617716e79 h1:69ttkRSUIO7Kvg2MkzW01cYDfsyeqdpRWyHr8eCMZOg=
