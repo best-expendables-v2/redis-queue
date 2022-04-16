@@ -78,7 +78,7 @@ func (consumer *defaultConsumer) Consume(delivery rmq.Delivery) {
 			}
 		}
 	} else {
-		consumer.failDelivery(ctx, handlerInstance, job, delivery, ErrJobExceedRetryTimes)
+		consumer.failDelivery(ctx, handlerInstance, job, delivery, errors.New("ErrJobExceedRetryTimes:"+job.GetFailedError()))
 	}
 }
 
