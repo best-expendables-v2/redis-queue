@@ -19,6 +19,7 @@ type Publisher interface {
 	Publish(ctx context.Context, job Job) error
 	PublishOnDelay(ctx context.Context, job Job) error
 	PublishRejected(ctx context.Context, job Job) error
+	PublishRawMessage(ctx context.Context, job Job, payload []byte) error
 	UseMiddlewares(m ...PublisherHandlerMiddleWare)
 }
 
@@ -47,6 +48,19 @@ func NewPublisherFromConfig(conf *RedisConfig) (Publisher, error) {
 // Publish a Payload to the passed Queue
 func (p *publisher) UseMiddlewares(m ...PublisherHandlerMiddleWare) {
 	p.middleWares = append(p.middleWares, m...)
+}
+func (p *publisher) PublishRawMessage(ctx context.Context, job Job, payload []byte) error {
+	processFunc := func(ctx context.Context, job Job) error {
+		if job.GetQueue() == "" {
+			return emptyQueueOnJob
+		}
+		ok := p.rmqConn.OpenQueue(job.GetQueue()).Publish(string(payload))
+		if !ok {
+			return fmt.Errorf("could not publish payloads to `%s` Queue", job.GetQueue())
+		}
+		return nil
+	}
+	return p.processWithMiddleWare(ctx, job, processFunc)
 }
 
 // Publish a Payload to the passed Queue
